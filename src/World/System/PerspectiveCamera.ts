@@ -3,8 +3,8 @@ class BasicCamera extends THREE.PerspectiveCamera {
   constructor(container: HTMLElement) {
     const fov = 35; // Field of View
     const aspect = container.clientWidth / container.clientHeight;
-    const near = 0.1; // the near clipping plane
-    const far = 1000; // the far clipping plane
+    const near = 0.1; // near clipping plane
+    const far = 1000; // far clipping plane
 
     super(fov, aspect, near, far);
 

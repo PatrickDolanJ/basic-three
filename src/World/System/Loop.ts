@@ -22,7 +22,11 @@ export interface Clickable {
 
 export type ClickData = Omit<THREE.Intersection, "object">;
 
-type HoverEvent = "ENTER" | "DURING" | "EXIT";
+export enum HoverEvent {
+  ENTER = "ENTER",
+  DURING = "DURING",
+  EXIT = "EXIT",
+}
 export type HoverData = Omit<THREE.Intersection, "object"> & {
   event: HoverEvent;
 };
@@ -157,14 +161,14 @@ class Loop {
   private processNewHover(intersections: THREE.Intersection[]) {
     if (intersections.length > 0 && isHoverable(intersections[0].object)) {
       const curHover = mapIntersection<Hoverable>(intersections[0]);
-      let event: HoverEvent = "ENTER";
+      let event: HoverEvent = HoverEvent.ENTER;
 
       if (
         this.hoverStorage.some(
           (obj) => obj.hoverable.uuid === curHover.object.uuid
         )
       ) {
-        event = "DURING";
+        event = HoverEvent.EXIT;
       }
       const data: HoverData = { ...curHover.data, event: event };
 
@@ -187,7 +191,7 @@ class Loop {
         isHoverable(intersections[0].object) ||
         intersections[0].object.uuid !== item.hoverable.uuid
       ) {
-        item.hoverData.event = "EXIT";
+        item.hoverData.event = HoverEvent.EXIT;
         item.hoverable.onHover(item.hoverData);
         this.hoverStorage = this.hoverStorage.filter(
           (obj) => obj.hoverable.uuid !== item.hoverable.uuid

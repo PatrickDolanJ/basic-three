@@ -3,11 +3,22 @@ import CustomShaderMaterial from "three-custom-shader-material/vanilla";
 import basicVertShader from "./basicVertex.glsl";
 import basicFragShader from "./basicFragment.glsl";
 
-const BasicMat = new CustomShaderMaterial({
-  baseMaterial: THREE.MeshPhongMaterial,
-  vertexShader: basicVertShader,
-  fragmentShader: basicFragShader,
-  fog: true,
-});
+export class UpdatableMeshPhongMaterial extends THREE.MeshPhongMaterial {
+  uniforms = { uTime: { value: 0.0 } };
+  constructor() {
+    super();
+  }
+}
 
-export { BasicMat };
+function createBasicMat() {
+  return new CustomShaderMaterial<typeof UpdatableMeshPhongMaterial>({
+    baseMaterial: UpdatableMeshPhongMaterial,
+    vertexShader: basicVertShader,
+    fragmentShader: basicFragShader,
+    uniforms: {
+      uTime: { value: 0.0 },
+    },
+  });
+}
+
+export { createBasicMat };
