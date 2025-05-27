@@ -3,14 +3,14 @@ import {
   // DotScreenShader,
   EffectComposer,
   GammaCorrectionShader,
-  ShaderPass,
+  // ShaderPass,
   // RGBShiftShader,
   Pass,
   RenderPass,
-  // ShaderPass,
+  ShaderPass,
   // RenderPixelatedPass,
 } from "three/examples/jsm/Addons.js";
-import { BasicShaderPass } from "../PostProcessing/Basic/BasicPostProcessingShader";
+// import { BasicShaderPass } from "../PostProcessing/Basic/BasicPostProcessingShader";
 
 class Renderer extends THREE.WebGLRenderer {
   composer: EffectComposer;
@@ -23,7 +23,7 @@ class Renderer extends THREE.WebGLRenderer {
     super({ antialias: true, precision: "highp" });
     this.setPixelRatio(window.devicePixelRatio);
     this.toneMapping = THREE.NoToneMapping;
-    container.appendChild(this.domElement);
+    container.appendChild(this.domElement); // Where we inject the canvas
     this.composer = new EffectComposer(this);
     this.shadowMap.enabled = true;
 
