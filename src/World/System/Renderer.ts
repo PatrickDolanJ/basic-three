@@ -10,7 +10,7 @@ import {
   ShaderPass,
   // RenderPixelatedPass,
 } from "three/examples/jsm/Addons.js";
-import { makeBasicShaderPass } from "../PostProcessing/Basic/BasicPostProcessingShader";
+// import { makeBasicShaderPass } from "../PostProcessing/Basic/BasicPostProcessingShader";
 
 export class Renderer extends THREE.WebGLRenderer {
   composer: EffectComposer;
@@ -46,8 +46,8 @@ export class Renderer extends THREE.WebGLRenderer {
     // chromaticAbPass.uniforms["amount"].value = 0.004;
     // this.composer.addPass(chromaticAbPass);
 
-    const basicPass = makeBasicShaderPass();
-    this.composer.addPass(basicPass);
+    // const basicPass = makeBasicShaderPass();
+    // this.composer.addPass(basicPass);
   }
 
   renderPostProcess() {
