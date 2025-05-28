@@ -1,0 +1,32 @@
+Examples ------------------------------------------------------------------
+
+Three Main Page             https://threejs.org/
+Pandericki's Garden         https://pendereckisgarden.pl/en/the-maestros-manor
+Mother's Day                https://www.pola.co.jp/special/o/wecaremore/mothersday/
+Bruno Simon                 https://bruno-simon.com/
+Pat Dolan                   https://patdolan.dev/2023
+Monkeys                     https://monkeys.zip/
+
+Tools ---------------------------------------------------------------------
+
+Three Dev Tools             https://chromewebstore.google.com/detail/threejs-devtools/jechbjkglifdaldbdbigibihfaclnkbo
+SpectorJS                   https://chromewebstore.google.com/detail/spectorjs/denbgaamihkadbghdceggmchnflmhpmk?hl=en&pli=1
+
+Libraries -----------------------------------------------------------------
+
+Three-Custom-Materials      https://www.npmjs.com/package/three-custom-shader-material
+GSAP                        https://www.npmjs.com/package/gsap
+THREE-BVH-CSG               https://www.npmjs.com/package/three-bvh-csg
+Troika-Three-Text           https://www.npmjs.com/package/troika-three-text
+
+Resources -----------------------------------------------------------------
+
+Three Docs                  https://threejs.org/docs/
+Three Source                https://github.com/mrdoob/three.js
+Three Examples              https://threejs.org/examples/
+Yuri Atriuk                 https://www.youtube.com/@akella_
+Quaternions Online          https://quaternions.online/
+Free OBJs                   https://free3d.com/3d-models/
+ShaderToy                   https://www.shadertoy.com/
+
+
