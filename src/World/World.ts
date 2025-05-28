@@ -10,7 +10,6 @@ import { StarterCube } from "./Components/StarterCube";
 import { Duck } from "./Components/Duck";
 import { TextureSphere } from "./Components/TexureSphere";
 import { makeDirectionalLight } from "./Components/DirectionalLight";
-import { AMBIENT_LIGHT_COLOR, AMBIENT_LIGHT_INTENSITY } from "./config";
 
 //----------------------Settings---------------------
 
@@ -88,10 +87,7 @@ export class World {
   }
 
   private setupAmbientLight() {
-    return new THREE.AmbientLight(
-      new THREE.Color().setHex(AMBIENT_LIGHT_COLOR),
-      AMBIENT_LIGHT_INTENSITY
-    );
+    return new THREE.AmbientLight(new THREE.Color().setHex(0xffccaa), 3.0);
   }
 
   private setupGroundPlane() {

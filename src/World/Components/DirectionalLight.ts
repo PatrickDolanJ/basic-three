@@ -1,13 +1,9 @@
 import * as THREE from "three";
-import {
-  DIRECTIONAL_LIGHT_COLOR,
-  DIRECTIONAL_LIGHT_INTENSITY,
-} from "../config";
 
 export function makeDirectionalLight() {
   const dl = new THREE.DirectionalLight(
-    new THREE.Color().setHex(DIRECTIONAL_LIGHT_COLOR),
-    DIRECTIONAL_LIGHT_INTENSITY
+    new THREE.Color().setHex(0xffccaa),
+    0.5
   );
   dl.castShadow = true;
   dl.shadow.mapSize.width = 4096;
