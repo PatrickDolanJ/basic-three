@@ -10,9 +10,9 @@ import {
   ShaderPass,
   // RenderPixelatedPass,
 } from "three/examples/jsm/Addons.js";
-// import { BasicShaderPass } from "../PostProcessing/Basic/BasicPostProcessingShader";
+import { makeBasicShaderPass } from "../PostProcessing/Basic/BasicPostProcessingShader";
 
-class Renderer extends THREE.WebGLRenderer {
+export class Renderer extends THREE.WebGLRenderer {
   composer: EffectComposer;
 
   constructor(
@@ -46,20 +46,18 @@ class Renderer extends THREE.WebGLRenderer {
     // chromaticAbPass.uniforms["amount"].value = 0.004;
     // this.composer.addPass(chromaticAbPass);
 
-    // const basicPass = new BasicShaderPass();
-    // this.composer.addPass(basicPass);
+    const basicPass = makeBasicShaderPass();
+    this.composer.addPass(basicPass);
   }
 
   renderPostProcess() {
     const uTime = performance.now() / 1000;
     // Manual Injection of current time
     this.composer.passes.forEach((pass: Pass) => {
-      if (pass instanceof ShaderPass) {
+      if (pass instanceof ShaderPass && pass.uniforms["uTime"]) {
         pass.uniforms["uTime"] = { value: uTime };
       }
     });
     this.composer.render();
   }
 }
-
-export { Renderer };

@@ -1,40 +1,14 @@
 import * as THREE from "three";
 import { clamp } from "three/src/math/MathUtils.js";
 import { Renderer } from "./Renderer";
-
-const clock = new THREE.Clock();
-const mouse = new THREE.Vector2(1, 1);
-let hoverRaycaster: THREE.Raycaster;
-let clickRaycaster: THREE.Raycaster;
-
-export interface Updateable {
-  update(delta?: number): void | boolean; //This is probably dum
-  uuid: string;
-}
-export interface Hoverable {
-  onHover(data: HoverData): void;
-  uuid: string;
-}
-export interface Clickable {
-  onClick(data: ClickData): void;
-  uuid: string;
-}
-
-export type ClickData = Omit<THREE.Intersection, "object">;
-
-export enum HoverEvent {
-  ENTER = "ENTER",
-  DURING = "DURING",
-  EXIT = "EXIT",
-}
-export type HoverData = Omit<THREE.Intersection, "object"> & {
-  event: HoverEvent;
-};
-
-interface HoverStorage {
-  hoverable: Hoverable;
-  hoverData: HoverData;
-}
+import {
+  Clickable,
+  Hoverable,
+  HoverData,
+  HoverEvent,
+  HoverStorage,
+  Updateable,
+} from "./types";
 
 function isHoverable(obj: unknown): obj is Hoverable {
   return (
@@ -61,7 +35,7 @@ function mapIntersection<T>(
   return { object: object as T, data: rest };
 }
 
-class Loop {
+export class Loop {
   private updatables: Updateable[] = [];
   private hoverStorage: HoverStorage[] = [];
   camera: THREE.Camera;
@@ -70,6 +44,10 @@ class Loop {
   maxInterval: number;
   fixedTimeInterval: number;
   isFixedTimeInterval: boolean;
+  clock = new THREE.Clock();
+  mouse = new THREE.Vector2(1, 1);
+  hoverRaycaster: THREE.Raycaster = new THREE.Raycaster();
+  clickRaycaster: THREE.Raycaster = new THREE.Raycaster();
 
   constructor(
     camera: THREE.PerspectiveCamera | THREE.Camera,
@@ -85,9 +63,6 @@ class Loop {
     this.maxInterval = maxInterval;
     this.fixedTimeInterval = fixedTimeInterval;
     this.isFixedTimeInterval = isFixedTimeInterval;
-
-    hoverRaycaster = new THREE.Raycaster();
-    clickRaycaster = new THREE.Raycaster();
 
     document.addEventListener("mousemove", (event) => {
       this.onMouseMove(event);
@@ -117,7 +92,7 @@ class Loop {
   }
 
   private update() {
-    const clockDelta = clock.getDelta();
+    const clockDelta = this.clock.getDelta();
     let delta = clamp(clockDelta, 0, this.maxInterval);
     if (this.isFixedTimeInterval) {
       delta = this.fixedTimeInterval;
@@ -131,14 +106,16 @@ class Loop {
 
   private onMouseMove(event: MouseEvent) {
     event.preventDefault();
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
   }
 
   private onHover() {
-    hoverRaycaster.setFromCamera(mouse, this.camera);
+    this.hoverRaycaster.setFromCamera(this.mouse, this.camera);
 
-    const intersections = hoverRaycaster.intersectObjects(this.scene.children);
+    const intersections = this.hoverRaycaster.intersectObjects(
+      this.scene.children
+    );
     if (intersections.length === 0 && this.hoverStorage.length === 0) {
       return;
     }
@@ -148,8 +125,10 @@ class Loop {
   }
 
   private onClick() {
-    clickRaycaster.setFromCamera(mouse, this.camera);
-    const intersection = clickRaycaster.intersectObjects(this.scene.children);
+    this.clickRaycaster.setFromCamera(this.mouse, this.camera);
+    const intersection = this.clickRaycaster.intersectObjects(
+      this.scene.children
+    );
     if (intersection.length == 0 || !isClickable(intersection[0]?.object)) {
       return;
     } else {
@@ -200,5 +179,3 @@ class Loop {
     });
   }
 }
-
-export { Loop };

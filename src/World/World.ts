@@ -9,16 +9,17 @@ import { Resizer } from "./System/Resizer";
 import { StarterCube } from "./Components/StarterCube";
 import { Duck } from "./Components/Duck";
 import { TextureSphere } from "./Components/TexureSphere";
-import { DirectionalLight } from "./Components/DirectionalLight";
+import { makeDirectionalLight } from "./Components/DirectionalLight";
+import { AMBIENT_LIGHT_COLOR, AMBIENT_LIGHT_INTENSITY } from "./config";
 
 //----------------------Settings---------------------
 
-class World {
+export class World {
   scene: THREE.Scene;
   camera: THREE.Camera;
   renderer: Renderer;
   loop: Loop;
-  orbitController?: OrbitController;
+  orbitController: OrbitController;
   resizer: Resizer;
 
   constructor(container: HTMLElement) {
@@ -31,35 +32,21 @@ class World {
     this.orbitController = new OrbitController(this.camera, container);
     this.resizer = new Resizer(container, this.camera, this.renderer);
 
-    //Basic Mesh with custom shader
-    const starterCube = new StarterCube(5, 5, 5, 10, 10, 10);
-    starterCube.position.set(0, 0, 0);
-    starterCube.castShadow = true;
-    starterCube.receiveShadow = true;
+    const starterCube = this.setupStarterCube();
     this.loop.addUpdateable(starterCube);
     this.scene.add(starterCube);
 
-    //Custom Mesh
-    const duck = new Duck();
-    this.loop.addUpdateable(duck);
-    duck.position.set(7, 0, -7);
+    const duck = this.setupDuck();
     this.scene.add(duck);
 
-    //Textured Sphere
-    const sphere = new TextureSphere();
-    sphere.position.set(-7, 0, 7);
+    const sphere = this.setupSphere();
     this.loop.addUpdateable(sphere);
     this.scene.add(sphere);
 
-    //Lights
-    const ambientLight = new THREE.AmbientLight(
-      new THREE.Color().setHex(0xffccaa),
-      0.5
-    );
-    const dl = new DirectionalLight(new THREE.Color().setHex(0xffccaa), 3.0);
-    dl.position.set(0, 10, 0);
-
+    const ambientLight = this.setupAmbientLight();
     this.scene.add(ambientLight);
+
+    const dl = this.setupDirectionalLight();
     this.scene.add(dl);
 
     //Helpers
@@ -69,13 +56,52 @@ class World {
     this.scene.add(dlHelper);
 
     //Ground Plane
+    const groundPlane = this.setupGroundPlane();
+    this.scene.add(groundPlane);
+  }
+
+  private setupStarterCube() {
+    const starterCube = new StarterCube(5, 5, 5, 10, 10, 10);
+    starterCube.position.set(0, 0, 0);
+    starterCube.castShadow = true;
+    starterCube.receiveShadow = true;
+    return starterCube;
+  }
+
+  private setupDuck() {
+    const duck = new Duck();
+    this.loop.addUpdateable(duck);
+    duck.position.set(7, 0, -7);
+    return duck;
+  }
+
+  private setupSphere() {
+    const sphere = new TextureSphere();
+    sphere.position.set(-7, 0, 7);
+    return sphere;
+  }
+
+  private setupDirectionalLight(): THREE.DirectionalLight {
+    const dl = makeDirectionalLight();
+    dl.position.set(0, 10, 0);
+    return dl;
+  }
+
+  private setupAmbientLight() {
+    return new THREE.AmbientLight(
+      new THREE.Color().setHex(AMBIENT_LIGHT_COLOR),
+      AMBIENT_LIGHT_INTENSITY
+    );
+  }
+
+  private setupGroundPlane() {
     const groundPlane = new THREE.Mesh(
       new THREE.BoxGeometry(20, 0.2, 20),
       new THREE.MeshPhongMaterial()
     );
     groundPlane.position.set(0, -5, 0);
     groundPlane.receiveShadow = true;
-    this.scene.add(groundPlane);
+    return groundPlane;
   }
 
   start() {
@@ -85,4 +111,3 @@ class World {
     this.loop.stop();
   }
 }
-export { World };

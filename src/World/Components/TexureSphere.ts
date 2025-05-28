@@ -1,7 +1,7 @@
 import * as THREE from "three";
-import { Updateable } from "../System/Loop";
+import { Updateable } from "../System/types";
 
-class TextureSphere extends THREE.Mesh implements Updateable {
+export class TextureSphere extends THREE.Mesh implements Updateable {
   mat: THREE.MeshPhongMaterial = new THREE.MeshPhongMaterial({
     shininess: 600,
   });
@@ -19,5 +19,3 @@ class TextureSphere extends THREE.Mesh implements Updateable {
     this.rotateY(0.01);
   }
 }
-
-export { TextureSphere };

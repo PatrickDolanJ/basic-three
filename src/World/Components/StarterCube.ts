@@ -8,9 +8,9 @@ import {
   HoverData,
   Updateable,
   HoverEvent,
-} from "../System/Loop";
+} from "../System/types";
 
-class StarterCube
+export class StarterCube
   extends THREE.Mesh
   implements Hoverable, Clickable, Updateable
 {
@@ -62,5 +62,3 @@ class StarterCube
     this.material.uniforms.uTime.value = uTime;
   }
 }
-
-export { StarterCube };

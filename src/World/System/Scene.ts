@@ -1,5 +1,5 @@
 import * as THREE from "three";
-class BasicScene extends THREE.Scene {
+export class BasicScene extends THREE.Scene {
   constructor(
     backgroundColor = new THREE.Color().setHex(
       0x24212b,
@@ -16,5 +16,3 @@ class BasicScene extends THREE.Scene {
     this.background.convertSRGBToLinear();
   }
 }
-
-export { BasicScene };

@@ -1,9 +1,9 @@
 import * as THREE from "three";
 import { OBJLoader } from "three/addons/loaders/OBJLoader.js";
 import { MTLLoader } from "three/addons/loaders/MTLLoader.js";
-import { Updateable } from "../System/Loop";
+import { Updateable } from "../System/types";
 
-class Duck extends THREE.Group implements Updateable {
+export class Duck extends THREE.Group implements Updateable {
   constructor() {
     super();
     const objLoader = new OBJLoader();
@@ -35,5 +35,3 @@ class Duck extends THREE.Group implements Updateable {
       Math.sin(THREE.MathUtils.degToRad(performance.now() / 10)) + Math.PI / 4;
   }
 }
-
-export { Duck };

@@ -10,7 +10,7 @@ export class UpdatableMeshPhongMaterial extends THREE.MeshPhongMaterial {
   }
 }
 
-function createBasicMat() {
+export function createBasicMat() {
   return new CustomShaderMaterial<typeof UpdatableMeshPhongMaterial>({
     baseMaterial: UpdatableMeshPhongMaterial,
     vertexShader: basicVertShader,
@@ -20,5 +20,3 @@ function createBasicMat() {
     },
   });
 }
-
-export { createBasicMat };
