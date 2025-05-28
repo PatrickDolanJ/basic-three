@@ -31,7 +31,7 @@ class World {
     this.orbitController = new OrbitController(this.camera, container);
     this.resizer = new Resizer(container, this.camera, this.renderer);
 
-    //basic Mesh with custom shader
+    //Basic Mesh with custom shader
     const starterCube = new StarterCube(5, 5, 5, 10, 10, 10);
     starterCube.position.set(0, 0, 0);
     starterCube.castShadow = true;
@@ -51,7 +51,7 @@ class World {
     this.loop.addUpdateable(sphere);
     this.scene.add(sphere);
 
-    //lights
+    //Lights
     const ambientLight = new THREE.AmbientLight(
       new THREE.Color().setHex(0xffccaa),
       0.5

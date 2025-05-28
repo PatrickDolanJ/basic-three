@@ -150,7 +150,7 @@ class Loop {
   private onClick() {
     clickRaycaster.setFromCamera(mouse, this.camera);
     const intersection = clickRaycaster.intersectObjects(this.scene.children);
-    if (intersection.length == 0 || !isClickable(intersection[0].object)) {
+    if (intersection.length == 0 || !isClickable(intersection[0]?.object)) {
       return;
     } else {
       const clickable = mapIntersection<Clickable>(intersection[0]);
